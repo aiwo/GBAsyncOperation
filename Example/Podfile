@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'GBAsyncOperation_Example' do
+  pod 'GBAsyncOperation', :path => '../'
+
+  target 'GBAsyncOperation_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
