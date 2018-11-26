@@ -9,34 +9,23 @@
 Pod::Spec.new do |s|
   s.name             = 'GBAsyncOperation'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of GBAsyncOperation.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+  s.summary          = 'Allows to create Swift Operations with asynchronous work packages'
+  s.swift_version    = '4.0'
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+  Framework is mainly focused on isolating the work package from the package point into a asynchronous operation subclass. By doing this calling point class is able to implement and manipulate a queue of operations.
                        DESC
 
   s.homepage         = 'https://github.com/aiwo/GBAsyncOperation'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'aiwo' => 'bergencroc@gmail.com' }
+  s.author           = { 'Gennady Berezovsky' => 'bergencroc@gmail.com' }
   s.source           = { :git => 'https://github.com/aiwo/GBAsyncOperation.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.social_media_url = 'https://twitter.com/aiwo'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
 
   s.source_files = 'GBAsyncOperation/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'GBAsyncOperation' => ['GBAsyncOperation/Assets/*.png']
-  # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  
 end

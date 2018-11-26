@@ -1,11 +1,12 @@
 use_frameworks!
 
+platform :ios, '9.0'
+
 target 'GBAsyncOperation_Example' do
   pod 'GBAsyncOperation', :path => '../'
 
   target 'GBAsyncOperation_Tests' do
     inherit! :search_paths
-
-    
   end
+  
 end

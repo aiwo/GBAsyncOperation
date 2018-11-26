@@ -1,28 +1,44 @@
 import XCTest
 import GBAsyncOperation
 
+class TestOperation: GBAsyncOperation {
+
+    let expectation: XCTestExpectation
+
+    init(expectation: XCTestExpectation) {
+        self.expectation = expectation
+    }
+
+    override func main() {
+        sleep(2)
+        expectation.fulfill()
+        finish()
+    }
+}
+
 class Tests: XCTestCase {
+
+    let operationQueue = OperationQueue()
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testSubclassedOperation() {
+        let expectation = XCTestExpectation(description: "Operation must finish")
+
+        let operation = TestOperation(expectation: expectation)
+        operationQueue.addOperation(operation)
+
+        wait(for: [expectation], timeout: 5)
     }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure() {
-            // Put the code you want to measure the time of here.
-        }
+
+    func testBlockOperation() {
+        let expectation = XCTestExpectation(description: "Operation must finish")
+
+        let operation = GBAsyncBlockOperation(block: {
+            sleep(2)
+            expectation.fulfill()
+        })
+        operationQueue.addOperation(operation)
+
+        wait(for: [expectation], timeout: 5)
     }
     
 }

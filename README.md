@@ -11,6 +11,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
+None
+
 ## Installation
 
 GBAsyncOperation is available through [CocoaPods](https://cocoapods.org). To install
@@ -20,9 +22,19 @@ it, simply add the following line to your Podfile:
 pod 'GBAsyncOperation'
 ```
 
+## Usage
+
+### Import
+```swift
+import GBAsyncOperation
+```
+### Subclassing an operation
+
+Example here
+
 ## Author
 
-aiwo, bergencroc@gmail.com
+Gennady Berezovsky
 
 ## License
 

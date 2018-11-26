@@ -1,0 +1,16 @@
+PODS:
+  - GBAsyncOperation (0.1.0)
+
+DEPENDENCIES:
+  - GBAsyncOperation (from `../`)
+
+EXTERNAL SOURCES:
+  GBAsyncOperation:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  GBAsyncOperation: 285a373d6824852965f973802e7348e496bd4784
+
+PODFILE CHECKSUM: ab5fe9e67d0eb2af2c86cf820f1040eae02cb813
+
+COCOAPODS: 1.5.0
