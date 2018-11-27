@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class GBAsyncOperation: Operation {
+open class GBAsyncOperation: GBBaseOperation {
 
     @objc private enum OperationState: Int {
         case ready
@@ -37,7 +37,7 @@ open class GBAsyncOperation: Operation {
         return super.keyPathsForValuesAffectingValue(forKey: key)
     }
 
-    public final override func start() {
+    open override func start() {
         if isCancelled {
             finish()
             return
@@ -53,6 +53,9 @@ open class GBAsyncOperation: Operation {
     }
 
     public final func finish() {
-        if isExecuting { state = .finished }
+        if isExecuting {
+            state = .finished
+        }
     }
+
 }
