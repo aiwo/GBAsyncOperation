@@ -8,6 +8,8 @@
 
 import Foundation
 
+/// A class that provides asynchronous completion capabilities
+
 open class GBAsyncOperation: GBBaseOperation {
 
     @objc private enum OperationState: Int {
@@ -52,6 +54,14 @@ open class GBAsyncOperation: GBBaseOperation {
         fatalError("Subclasses must implement `main`.")
     }
 
+    /**
+     Triggers operation completion.
+
+     ## Important ##
+
+     Must be called in order for the operation to successfuly leave the queue
+
+     */
     public final func finish() {
         if isExecuting {
             state = .finished

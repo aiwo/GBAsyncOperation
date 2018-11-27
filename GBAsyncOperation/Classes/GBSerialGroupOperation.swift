@@ -7,10 +7,17 @@
 
 import Foundation
 
+/// A class that provides an ability of grouping asynchronous operations in a bundle and creating a dependency between them
+
 open class GBSerialGroupOperation: GBAsyncOperation {
 
     let internalQueue = OperationQueue()
 
+    /**
+     initializes the group with an operation array.
+
+     - Parameter operations: Operations collection. Operations will be queue in the order of the array.
+     */
     public init(operations: [GBBaseOperation]) {
         internalQueue.isSuspended = true
 
@@ -19,6 +26,11 @@ open class GBSerialGroupOperation: GBAsyncOperation {
         operations.forEach({ self.addOperation(operation: $0) })
     }
 
+    /**
+     Adds an operation into a serial group
+
+     - Parameter operation: The operation that will be queued.
+     */
     public func addOperation(operation: GBBaseOperation) {
         guard !isExecuting, !isCancelled else {
             assertionFailure("You cannot add operations to already running or cancelled group")
@@ -41,6 +53,9 @@ open class GBSerialGroupOperation: GBAsyncOperation {
             return
         }
 
+        // This operation acts as a signal of either
+        // the internal queue depletion or the cancellation of the group
+        
         let completionOperation = GBBlockOperation {
             self.finish()
         }
