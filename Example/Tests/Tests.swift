@@ -67,4 +67,96 @@ class Tests: XCTestCase {
         wait(for: [firstExpectation, secondExpectation], timeout: 10)
     }
     
+    func testSerialGroupSubclass() {
+        let expectation = XCTestExpectation()
+        
+        let serialGroupOperation = MySerialGroupOperation()
+        serialGroupOperation.completionBlock = {
+            expectation.fulfill()
+        }
+        
+        operationQueue.addOperation(serialGroupOperation)
+        
+        wait(for: [expectation], timeout: 10)
+    }
+    
+    func testSerialGroupSubclassFailing() {
+        let expectation = XCTestExpectation()
+        
+        let serialGroupOperation = MySerialGroupOperationFailing()
+        serialGroupOperation.completionBlock = {
+            XCTFail()
+        }
+        serialGroupOperation.cancellationBlock = {
+            expectation.fulfill()
+        }
+        
+        operationQueue.addOperation(serialGroupOperation)
+        
+        wait(for: [expectation], timeout: 60)
+    }
+    
+}
+
+class MyAsyncOperation: GBAsyncOperation {
+    
+    var completion: () -> Void
+    var shouldFail: Bool
+    
+    init(shouldFail: Bool = false, completion: @escaping () -> Void) {
+        self.shouldFail = shouldFail
+        self.completion = completion
+    }
+    
+    override func main() {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+            if self.shouldFail {
+                self.cancel() // No need to call finish()
+            } else {
+                self.completion()
+                self.finish()
+            }
+        }
+    }
+
+}
+
+class MySerialGroupOperation: GBSerialGroupOperation {
+    
+    override init() {
+        let operation = MyAsyncOperation { 
+            print("First MyAsyncOperation finish")
+        }
+        let oneMoreOperation = MyAsyncOperation { 
+            print("Second MyAsyncOperation finish")
+        }
+        super.init(operations: [operation, oneMoreOperation])
+    }
+    
+}
+
+class MySerialGroupOperationFailing: GBSerialGroupOperation {
+    
+    override init() {
+        let operation = MyAsyncOperation { 
+            print("I should pass")
+        }
+        
+        let failingOperation = MyAsyncOperation(shouldFail: true) { 
+            print("MyAsyncOperation finish")
+        }
+        failingOperation.cancellationBlock = {
+            print("I am cancelled")
+        }
+        
+        let oneMoreOperation = MyAsyncOperation { 
+            XCTFail()
+        }
+        oneMoreOperation.cancellationBlock = {
+            print("I was forced to cancel")
+        }
+        
+        super.init(operations: [operation, failingOperation, oneMoreOperation])
+    }
+    
 }
