@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'GBAsyncOperation'
-  s.version          = '0.2.0'
+  s.version          = '0.2.1'
   s.summary          = 'Allows to create Swift Operations with asynchronous work packages'
   s.swift_version    = '4.0'
 
